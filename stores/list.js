@@ -1,42 +1,26 @@
-import { defineStore } from "pinia";
-// import { ref, computed } from 'vue';
+import { ref, computed } from 'vue'
+import { defineStore } from 'pinia'
 
-// export const useListStore = defineStore("list", () => {
-//     const list = ref([]);
-//     function addList(param) {
-//         list.value.push(param);
-//     }
-//     const getDataAll = computed(() => list.value);
+export const useListStore = defineStore('list', () => {
+    let id = 0;
 
-//     return { list, addList, getDataAll };
-// });
+    const list = ref([])
 
-// export const userUserStore = defineStore("list", {
-//     state: () => ({
-//         title: null,
-//     }),
-//     getters: {
-//         isBlank: (state) => {
-//             return state.title != null;
-//         },
-//     },
+    // list 추가
+    const addList = (lists) => {
+        list.value.push({
+            id: id++,
+            title: lists.title,
+            date: lists.date,
+            contents: lists.contents,
+        })
+    }
 
-//     actions: {},
-// })
+    const searchList = (category) => {
+        return list.value.filter((list) => list.title.includes(category.value));
+    }
 
+    return { list, addList, searchList };
+}, { persist: true })
 
-export const userUserStore = defineStore('storeUser', {
-    state: () => ({
-        title: '제목',
-        date: '날짜',
-        contents: '내용',
-    }),
-    persist: {
-        enabled: true,
-        strategies: [
-            {
-                storage: localStorage, paths: ['title', 'date', 'contents']
-            },
-        ],
-    },
-})
+// list 서치

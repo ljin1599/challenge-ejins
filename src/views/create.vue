@@ -1,37 +1,27 @@
 <template>
-  <div class="create">
-    <h1>입력 화면</h1>
-    <!-- {{ userStore.title }} -->
-    {{ date }}
-    <input v-model="title" type="text">
-    <input type="date" v-model="date" />
+  <div>
+    <h4>생성 페이지</h4>
+
+    <input v-model.trim="title" type="text" placeholder="제목을 입력하세요." />
+    <input v-model="date" type="date" />
     <textarea v-model="contents"></textarea>
-    <button @click="goHome">확인</button>
+
+    <button @click="submit">등록</button>
   </div>
 </template>
 
-<script>
-import { ref } from 'vue'
+<script setup>
+import { useListStore } from '../../stores/list';
 import router from '@/router';
-import { useUserStore } from  "../../stores/list";
+import { ref } from 'vue'
 
+const store = useListStore();
+const title = ref(''); 
+const date = ref('');
+const contents = ref('');
 
-export default {
-  setup() {
-    const title = ref(''); 
-    const date = ref('');
-    const contents = ref('');
-
-    // const userStore = useUserStore;
-    
-    function goHome() {
-      router.push({ name: 'home', state: {
-      }});
-    }
-
-    return {
-      title, date, contents, goHome
-    }
-  }
+const submit = () => {
+  store.addList({title, date, contents});
+  router.push({name:'home'});
 }
 </script>

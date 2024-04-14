@@ -1,13 +1,24 @@
-import { createApp } from 'vue'
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 // pinia storage 저장 plugin
-import piniaPersist from 'pinia-plugin-persist'
-import App from './App.vue'
-import router from './router'
-import { createPinia } from 'pinia'
-import { userUserStore } from 'stores/list'
+// import piniaPersist from 'pinia-plugin-persist'
+// import { createPinia } from 'pinia'
+// import { userUserStore } from '/stores/list'
 
-createApp(App).use(router).use(createPinia()).use(piniaPersist()).mount('#app')
+const app = createApp(App);
 
-const userStore = userUserStore()
-// createPinia.use(piniaPersist())
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+// const userStore = userUserStore()
+
+app.use(router);
+app.use(pinia);
+app.mount('#app');
+// app.use(createPinia())
+// userStore.use(piniaPersist())
+
+// // createPinia.use(piniaPersist())
 
