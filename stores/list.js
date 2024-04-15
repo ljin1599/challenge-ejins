@@ -20,7 +20,11 @@ export const useListStore = defineStore('list', () => {
         return list.value.filter((list) => list.title.includes(category.value));
     }
 
-    return { list, addList, searchList };
+    const searchDate = () => {
+        
+    }
+
+    return { list, addList, searchList, searchDate };
 }, { persist: true })
 
 // list 서치
